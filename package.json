@@ -1,0 +1,12 @@
+{
+  "name": "jsmazegenerator",
+  "version": "1.0.0",
+  "description": "Depth First Recursive Backtrack Maze Generator",
+  "main": "./app/index.js",
+  "scripts": {
+  	"webdev": "webpack-dev-server --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "squaremarco",
+  "license": "MIT"
+}

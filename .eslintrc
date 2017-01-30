@@ -1,0 +1,15 @@
+extends: ["eslint:recommended"]
+parserOptions:
+  ecmaVersion: 5
+  sourceType: "module"
+globals:
+  angular: true
+env:
+  browser: true
+  node: true
+  commonjs: true
+  amd: true
+  es6: true
+rules:
+  no-unused-vars: ["warn"]
+  no-console: ["warn"]
