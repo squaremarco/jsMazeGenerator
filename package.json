@@ -4,7 +4,7 @@
   "description": "Depth First Recursive Backtrack Maze Generator",
   "main": "./app/index.js",
   "scripts": {
-  	"webdev": "webpack-dev-server --open",
+  	"webdev": "webpack-dev-server --env=dev --colors --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "squaremarco",

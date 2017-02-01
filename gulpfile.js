@@ -11,7 +11,7 @@ gulp.task("copyHTML", function(){
 });
 
 gulp.task("webpackBuild", function(callback){
-	webpack(webpackConfig, function(err, stats){
+	webpack(webpackConfig("build"), function(err, stats){
 		gutil.log("[Webpack]", stats.toString({
 			colors: true
 		}));
@@ -19,4 +19,16 @@ gulp.task("webpackBuild", function(callback){
 	});
 });
 
-gulp.task("default", gulp.parallel("copyHTML", "webpackBuild"));
+gulp.task("webpackDev", function(callback){
+	webpack(webpackConfig("dev"), function(err, stats){
+		gutil.log("[Webpack]", stats.toString({
+			colors: true
+		}));
+		callback();
+	});
+});
+
+gulp.task("build", gulp.parallel("copyHTML", "webpackBuild"));
+
+gulp.task("default", gulp.series("build"));
+gulp.task("dev", gulp.parallel("copyHTML", "webpackDev"));
