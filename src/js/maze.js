@@ -3,6 +3,7 @@
 const Cell = require("./cell.js");
 const Grid = require("./grid.js");
 
+//maze extends the grid class
 const Maze = function(cols, rows, cellSize, P5){
 	Grid.call(this, cols, rows, cellSize, P5);
 
@@ -17,7 +18,10 @@ Maze.prototype.constructor = Maze;
 Maze.prototype.generateMaze = function(){
 	let looping = true;
 	let stack = [];
-	let s, e;
+	let s = 0;
+	let e = 0;
+
+	this.resetGrid();
 
 	let currentCell = this.grid[0];
 	currentCell.visited = true;
@@ -107,7 +111,9 @@ Maze.prototype.drawMaze = function(strokeColor, startFillColor, endFillColor){
 
 Maze.prototype.drawPath = function(startFillColor, endFillColor){
 	let path = this.getOptimalPath();
-	for(let k = path.length - 1; k >= 0; k--) path[k].fill(this.P5.lerpColor(endFillColor, startFillColor, k / path.length));
+	for(let k = path.length - 1; k >= 0; k--){
+		path[k].fill(this.P5.lerpColor(endFillColor, startFillColor, k / path.length));
+	}
 };
 
 module.exports = Maze;
