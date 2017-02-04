@@ -23,27 +23,34 @@ Maze.prototype.generateMaze = function(){
 
 	this.resetGrid();
 
-	let currentCell = this.grid[0];
+	//start visiting the grid from a random cell
+	let currentCell = this.grid[this.P5.floor(this.P5.random(0, this.grid.length - 1))];
 	currentCell.visited = true;
 
+	//loop until you visited each cell
 	while(looping){
+		//choose a random neighbor from the current cell
 		let nextCell = this.getRandomNeighbor(
 			currentCell.i, 
 			currentCell.j,
 			(e) => !!e && !e.visited
 		);
+		//if it exists visit it
 		if(nextCell){
 			nextCell.visited = true;
 			nextCell.connectedTo.push(currentCell);
 			currentCell.connectedTo.push(nextCell);
 			
+			//push current cell in the stack so you can backtrack to it
 			stack.push(currentCell);
 
 			Cell.removeWalls(currentCell, nextCell);
 			currentCell = nextCell;
 		} else if (stack.length > 0) {
+			//if it doesn't exists backtrack
 			currentCell = stack.pop();
 		} else {
+			//if the stack is empty you finished visiting the grid
 			looping = false;
 		}
 	}
@@ -63,16 +70,20 @@ Maze.prototype.getOptimalPath = function(){
 	let path = [];
 	let currentCell;
 
+	//push start node
 	openSet.push(this.start);
+	//loop until openset has at least one element inside
 	while(openSet.length > 0){
-		let lowestIndex = 0;
-			
+		//find the element in open set with the lowest f value
+		let lowestIndex = 0;	
 		for(let k = 0; k < openSet.length; k++){
 			if(openSet[k].f < openSet[lowestIndex].f) lowestIndex = k;
 		}
+		//visit that element
 		currentCell = openSet[lowestIndex];
-
+		//if that element is the end node
 		if(currentCell === this.end){
+			//create the final path	
 			path.push(currentCell);
 			while(currentCell.previous){
 				path.push(currentCell.previous);
@@ -80,12 +91,14 @@ Maze.prototype.getOptimalPath = function(){
 			}
 			return path;
 		}
-
+		//remove the current node from the openset
 		for(let k = openSet.length -1; k >= 0; k--){
 			if(openSet[k] === currentCell) openSet.splice(k, 1);
 		}
+		//push the current node in the closed set
 		closedSet.push(currentCell);
 
+		//add the connected neighbors to the open set if they are not already in it
 		currentCell.connectedTo.forEach((e) => {
 			if(!closedSet.includes(e)){
 				let temp = currentCell.g + 1;
