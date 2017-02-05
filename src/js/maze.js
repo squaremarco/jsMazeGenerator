@@ -25,6 +25,7 @@ Maze.prototype.generateMaze = function(){
 
 	//start visiting the grid from a random cell
 	let currentCell = this.grid[this.P5.floor(this.P5.random(0, this.grid.length - 1))];
+
 	currentCell.visited = true;
 
 	//loop until you visited each cell
